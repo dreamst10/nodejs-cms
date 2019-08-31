@@ -2,13 +2,21 @@ const express = require('express');
 const router = express.Router();
 
 
+router.use('/',require('./register'));
+
+
 router.get('/', (req, res) => {
-    res.render('./../views/index.pug',{title:'test title', message:'test message'});
+//    res.render('index',{title:'test title', message:'test message lol'});
+    res.status(200).send({
+        status:200,
+        message:'ok'
+    })
+//    res.redirect('/index');
 });
 
 //user is already logged in
 router.get('/index',(req,res)=>{
-
+    res.render('index');
 });
 
 
