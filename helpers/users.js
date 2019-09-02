@@ -37,7 +37,7 @@ module.exports.checkUsername = username => {
 module.exports.register = (name, lastname, email, username, password) => {
     return new Promise((res, rej) => {
         db.connect().then(obj=>{
-            obj.any(properties.newUser,[name, lastname, email, username, password])
+            obj.none(properties.newUser,[name, lastname, email, username, password])
                 .then(()=>{
                     res({
                         status:200,
