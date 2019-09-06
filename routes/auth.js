@@ -1,11 +1,9 @@
 const express=require('express');
 const router =express.Router();
-const props=require('../utilities/properties');
-const db = require('../utilities/db');
 const bcrypt=require('bcryptjs');
 const User=require('../helpers/users');
 const auth=require('../middlewares/auth');
-const passport=require('passport')
+const passport=require('passport');
 
 router.get('/register', (req,res)=>{
 //    res.render('register');
