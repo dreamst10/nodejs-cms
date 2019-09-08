@@ -4,6 +4,7 @@ const router = express.Router();
 
 router.use('/',require('./auth'));
 router.use('/',require('./follow'));
+router.use('/',require('./post'));
 
 
 /*router.get('/', (req, res) => {

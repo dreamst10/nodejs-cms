@@ -16,8 +16,9 @@ module.exports={
 
 
     getPosts:"SELECT * FROM posts WHERE user_id=$1 OR USER_id IN (SELECT user_id2 FROM follows WHERE user_id1=$1",
+    getUserPosts:"SELECT * FROM posts WHERE user_id=$1",
     newPost:"INSERT INTO posts (post_title,post_text,post_url,user_id,type_post_id) VALUES ($1,$2,$3,$4,$5)",
-    deletePost:"DELETE FROM posts WHERE post_id=$1",
+    deletePost:"DELETE FROM posts WHERE post_id=$1 AND user_id=$2",
     searchPost:"SELECT FROM posts WHERE post_title ILIKE $1",
 
     getconfig:"SELECT * FROM configuration WHERE",
