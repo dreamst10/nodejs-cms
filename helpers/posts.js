@@ -73,3 +73,48 @@ module.exports.getUserPosts = (userId) => {
         });
     });
 };
+
+module.exports.newLike = (postId,userId,typeLike) => {
+    return new Promise((res, rej) => {
+        db.connect().then((obj) => {
+            obj.any(props.checkLike, [postId,userId])
+                .then((data) => {
+                    console.log(data[0].type_like_id);
+                    if(data == ''){
+                        obj.none(props.addLike, [postId,userId,typeLike]);
+                        res({
+                            message: "Like insert",
+                            status: 200,
+                        });
+                        
+                    }
+                    else if(data[0].type_like_id==typeLike){
+                        obj.none(props.deleteLike,[postId,userId]);
+                        res({
+                            message:'Like delete',
+                            status:200
+                        })
+                    }
+                    else{
+                        obj.none(props.updateLike, [postId,userId,typeLike]);
+                        res({
+                            message: "Like change",
+                            status: 200,
+                        });
+                    }
+                    obj.done();
+                }).catch((error) => {
+                    rej({
+                        error: error,
+                        msg: 'Error',
+                        status: 500
+                    });
+                    obj.done();
+                });
+        }).catch((error) => {
+            console.log(error);
+            rej(error);
+        });;
+    });
+};
+

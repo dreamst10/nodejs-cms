@@ -53,13 +53,13 @@ module.exports.usernameRegistered = (req, res, next) => {
       res.status(403).send({
         status: 403,
         message: 'Username already in use'
-      })
-      .catch(err => {
-        res.status(500).send({
-          status: 500,
-          message: err
-        });
       });
     }
+  })
+  .catch(err => {
+    res.status(500).send({
+      status: 500,
+      message: err
+    });
   });
 }

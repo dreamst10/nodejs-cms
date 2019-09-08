@@ -9,7 +9,7 @@ module.exports={
     updateInfo:"UPDATE users SET user_name=$1,user_lastname=$2,user_email=$3 WHERE user_id=$4",
     changePassword:"UPDATE users SET user_password=$1 WHERE user_id=$2",
     updatePicture:"UPDATE users SET user_picture=$1 WHERE user_id=$2",
-    searchUser:"SELECT * FROM users WHERE user_username ILIKE $1",
+    searchUser:"SELECT * FROM users WHERE user_username LIKE $1",
     checkEmail:"SELECT * FROM users WHERE user_email=$1",
     checkUsername:"SELECT * FROM users WHERE user_username = $1",
 
@@ -29,10 +29,13 @@ module.exports={
     updateComment:"UPDATE comments SET comment_text=$1 WHERE comment_id=$2",
     deleteComment:"DELETE FROM comments WHERE post_id=$1 AND user_id=$2",
 
+    checkLike:"SELECT * FROM likes WHERE post_id=$1 AND user_id=$2",
+    checkLikeType:"SELECT type_like_id FROM likes WHERE post_id=$1 AND user_id=$2",
     addLike:"INSERT INTO likes (post_id,user_id,type_like_id) VALUES ($1,$2,$3)",
     updateLike:"UPDATE likes SET type_like_id=$3 WHERE post_id=$1 AND user_id=$2",
-    countLikes:"SELECT COUNT(*) FROM likes WHERE post_id=$1 and type_like_id=1",
-    countDislike:"SELECT COUNT(*) FROM likes WHERE post_id=$1 and type_like_id=2",
+    deleteLike:"DELETE FROM likes WHERE post_id=$1 and user_id=$2",
+    countLikes:"SELECT COUNT(*) AS likes FROM likes WHERE post_id=$1 and type_like_id=1",
+    countDislike:"SELECT COUNT(*) AS dislikes FROM likes WHERE post_id=$1 and type_like_id=2",
 
 
     checkFollow:"SELECT follow_id FROM follows WHERE user_id1=$1 AND user_id2=$2",

@@ -10,6 +10,7 @@ router.get('/register', (req,res)=>{
 });
 
 
+
 router.post('/login',auth.isLogged,passport.authenticate('local'), function(req, res) {
    
       
@@ -38,7 +39,7 @@ router.post('/register',auth.isLogged,auth.emailRegistered,auth.usernameRegister
 
 
 router.get('/login',(req,res)=>{
-    //res.render();
+    res.send('this is login');
 });
 
 router.get('/logout', auth.isAuth, (req, res) => {

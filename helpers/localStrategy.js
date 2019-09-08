@@ -3,8 +3,8 @@ let localStrategy = require('passport-local').Strategy;
 
 module.exports = new localStrategy( {usernameField: 'username', passwordField: 'password'}, (username, password, done) => {
   User.checkUsername(username).then(user => {
-    if (user === null) {
-      return done(null, false);
+    if (user===null) {
+      return done(null, false,{message:'wrong username or password'});
     }
 
     User.comparePassword(password, user.user_password).then(isMatch => {
@@ -19,10 +19,14 @@ module.exports = new localStrategy( {usernameField: 'username', passwordField: '
         });
       }
       else {
-        return done(null, false)
+        return done(null, false,{message:'wrong username or password'})
      }
-    })
-  }, err => {
-    return done(null, false);
-  });
+    }).catch((err)=>{
+      console.log(err);
+      return done(null,false);
+    });
+  }).catch(err=>{
+    console.log(err);
+    return done(null,false);
+  })
 });
