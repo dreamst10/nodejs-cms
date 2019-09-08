@@ -6,7 +6,7 @@ router.use('/',require('./auth'));
 router.use('/',require('./follow'));
 router.use('/',require('./post'));
 router.use('/',require('./like'));
-
+router.use('/',require('./comment'));
 
 router.get('/', (req, res) => {
     if(req.isAuthenticated()){

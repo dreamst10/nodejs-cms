@@ -25,11 +25,18 @@ router.post('/login',auth.isLogged,passport.authenticate('local'), function(req,
 router.post('/register',auth.isLogged,auth.emailRegistered,auth.usernameRegistered,(req,res)=>{
     const user = req.body;
     const salt = bcrypt.genSaltSync(10);
+    if(!user.password===user.confPassword){
+        res.status(401).send({status:401,message:'passwords must match'});
+    }
     user.password = bcrypt.hashSync(user.password, salt);
     User.register(user.name,user.lastname,user.email,user.username,user.password)
         .then(data=>{
 
-            res.send(data);
+            res.status(200).send({
+                status:200,
+                message:'registered succesfully',
+                data
+            })
         })
         .catch(err=>{
             res.send(err);

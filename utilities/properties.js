@@ -20,14 +20,15 @@ module.exports={
     newPost:"INSERT INTO posts (post_title,post_text,post_url,user_id,type_post_id) VALUES ($1,$2,$3,$4,$5)",
     deletePost:"DELETE FROM posts WHERE post_id=$1 AND user_id=$2",
     searchPost:"SELECT FROM posts WHERE post_title ILIKE $1",
+    checkPost:"SELECT user_id FROM posts WHERE post_id = $1",
 
     getconfig:"SELECT * FROM configuration WHERE",
 
 
-    getComments:"SELECT co.comment_id,co_comment_text,co.user_id,u.user_id,user,u.user_username FROM comments co INNER JOIN posts pos ON pos.post_id = co.post_id INNER JOIN users us ON us.user_id = co.user_id  WHERE co.post_id = $1",
-    newComment:"INSERT INTO comments (comment_text, comment_url, post_id, user_id) VALUES ($1,$2,$3,$4)",
-    updateComment:"UPDATE comments SET comment_text=$1 WHERE comment_id=$2",
-    deleteComment:"DELETE FROM comments WHERE post_id=$1 AND user_id=$2",
+    getComments:"SELECT co.comment_id,co.comment_text,co.user_id,u.user_id,u.user_username FROM comments co INNER JOIN posts pos ON pos.post_id = co.post_id INNER JOIN users u ON u.user_id = co.user_id  WHERE co.post_id = $1",
+    newComment:"INSERT INTO comments (comment_text, comment_url, post_id, user_id) VALUES ($1,$2,$4,$3)",
+    updateComment:"UPDATE comments SET comment_text=$1 WHERE comment_id=$2 AND user_id=$3",
+    deleteComment:"DELETE FROM comments WHERE comment_id=$1 AND user_id=$2",
 
     checkLike:"SELECT * FROM likes WHERE post_id=$1 AND user_id=$2",
     checkLikeType:"SELECT type_like_id FROM likes WHERE post_id=$1 AND user_id=$2",
