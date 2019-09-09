@@ -3,12 +3,15 @@ const properties = require('../utilities/properties');
 
 module.exports.checkFollow=(followeeId,followerId)=>{
     return new Promise((res,rej)=>{
+        console.log(4);
         db.connect().then(obj=>{
+            console.log(5);
             obj.any(properties.checkFollow,[followeeId,followerId])
                 .then(data=>{
                     res(data);
                     obj.done();
                 }).catch(err=>{
+                    console.log(6);
                     rej({
                         error:err,
                         status:500,

@@ -8,6 +8,7 @@ router.use('/post',require('./post'));
 router.use('/like',require('./like'));
 router.use('/comment',require('./comment'));
 router.use('/profile',require('./profile'));
+router.use('/search',require('./search'))
 
 router.get('/', (req, res) => {
     if(req.isAuthenticated()){

@@ -2,14 +2,14 @@ module.exports={
     serverPort:3000,
     dbUrl:'postgres://postgres:himitsu64878@localhost:5432/nodejs-cms',
 
-    //database queries will go here
+    //database queries here
 
     newUser:"INSERT INTO users (user_name,user_lastname,user_email,user_username,user_password,user_picture) VALUES ($1,$2,$3,$4,$5,'./public/avatar.jpg')",
     getUser:"SELECT * FROM users WHERE user_username=$1",
     updateInfo:"UPDATE users SET user_username=$1, user_name=$2,user_lastname=$3,user_email=$4 WHERE user_id=$5",
     changePassword:"UPDATE users SET user_password=$1 WHERE user_id=$2",
     updatePicture:"UPDATE users SET user_picture=$1 WHERE user_id=$2",
-    searchUser:"SELECT * FROM users WHERE user_username LIKE $1",
+    searchUser:"SELECT user_id, user_username, user_name, user_lastname, user_picture FROM users WHERE user_username LIKE $1",
     checkEmail:"SELECT * FROM users WHERE user_email=$1",
     checkUsername:"SELECT * FROM users WHERE user_username = $1",
 
@@ -22,7 +22,6 @@ module.exports={
     searchPost:"SELECT FROM posts WHERE post_title ILIKE $1",
     checkPost:"SELECT user_id FROM posts WHERE post_id = $1",
 
-    getconfig:"SELECT * FROM configuration WHERE",
 
 
     getComments:"SELECT co.comment_id,co.comment_text,co.user_id,u.user_id,u.user_username FROM comments co INNER JOIN posts pos ON pos.post_id = co.post_id INNER JOIN users u ON u.user_id = co.user_id  WHERE co.post_id = $1",
@@ -39,7 +38,7 @@ module.exports={
     countDislike:"SELECT COUNT(*) AS dislikes FROM likes WHERE post_id=$1 and type_like_id=2",
 
 
-    checkFollow:"SELECT follow_id FROM follows WHERE user_id1=$1 AND user_id2=$2",
+    checkFollow:"SELECT follow_id FROM follows WHERE user_id1=$1 AND user_id2=$2 OR user_id1=$2 AND user_id2=$1",
     follow:"INSERT INTO follows (user_id1, user_id2) VALUES ($1, $2)",
     unfollow:"DELETE FROM follows WHERE user_id1=$1 AND user_id2=$2",
     countFollowers:"SELECT COUNT(*) AS followers FROM follows WHERE user_id1=$1",
