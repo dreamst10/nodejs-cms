@@ -2,11 +2,12 @@ const express = require('express');
 const router = express.Router();
 
 
-router.use('/',require('./auth'));
-router.use('/',require('./follow'));
-router.use('/',require('./post'));
-router.use('/',require('./like'));
-router.use('/',require('./comment'));
+router.use('/auth',require('./auth'));
+router.use('/follow',require('./follow'));
+router.use('/post',require('./post'));
+router.use('/like',require('./like'));
+router.use('/comment',require('./comment'));
+router.use('/profile',require('./profile'));
 
 router.get('/', (req, res) => {
     if(req.isAuthenticated()){

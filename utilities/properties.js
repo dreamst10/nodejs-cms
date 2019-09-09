@@ -6,7 +6,7 @@ module.exports={
 
     newUser:"INSERT INTO users (user_name,user_lastname,user_email,user_username,user_password,user_picture) VALUES ($1,$2,$3,$4,$5,'./public/avatar.jpg')",
     getUser:"SELECT * FROM users WHERE user_username=$1",
-    updateInfo:"UPDATE users SET user_name=$1,user_lastname=$2,user_email=$3 WHERE user_id=$4",
+    updateInfo:"UPDATE users SET user_username=$1, user_name=$2,user_lastname=$3,user_email=$4 WHERE user_id=$5",
     changePassword:"UPDATE users SET user_password=$1 WHERE user_id=$2",
     updatePicture:"UPDATE users SET user_picture=$1 WHERE user_id=$2",
     searchUser:"SELECT * FROM users WHERE user_username LIKE $1",

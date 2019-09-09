@@ -68,18 +68,38 @@ module.exports.comparePassword = (candidate, hash) => {
 
 
 
-/*
-module.exports.searchUsers = query => {
+module.exports.updateUserInfo = (username, name, lastname, email, userId) =>{
   return new Promise((res, rej) => {
-    db.connect().then(obj => {
-      obj.manyOrNone(properties.getUsersByUsername, ['%' + query + '%']).then(users => {
-        res(users);
-        obj.done();
+      db.connect().then((obj) => {
+          obj.none(properties.updateInfo, [username, name, lastname, email, userId]).then(() => {
+              res({status:200, message:'updated info'});
+              obj.done();
+          }).catch((error) => {
+              console.log(error);
+              rej(error);
+              obj.done();
+          });
+      }).catch((error) => {
+          console.log(error);
+          rej(error);
       });
-    }).catch(err => {
-      console.log(err);
-      rej(err);
-    });
   });
-}*/
+}
 
+module.exports.uploadProfilePic = (url, userId) =>{
+  return new Promise((res, rej) => {
+      db.connect().then((obj) => {
+          obj.none(properties.updatePicture, [url, userId]).then((data) => {
+              res(data);
+              obj.done();
+          }).catch((error) => {
+              console.log(error);
+              rej(error);
+              obj.done();
+          });
+      }).catch((error) => {
+          console.log(error);
+          rej(error);
+      });
+  });
+}
