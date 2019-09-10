@@ -48,6 +48,70 @@ module.exports.deletePost=(postId,userId)=>{
     });
 };
 
+
+module.exports.getPosts = (userId) => {
+    return new Promise((res, rej) => {
+        db.connect().then((obj) => {
+            obj.any(props.getPosts, [userId, userId])
+                .then((data) => {
+                    
+                    res({
+                        message: "Got all Posts for this user",
+                        status: 200,
+                        data:data
+                    });
+                    obj.done();
+                }).catch((error) => {
+                    console.log(error)
+                    rej({
+                        error: error,
+                        msg: 'Error',
+                        status: 500
+                    });
+                    obj.done();
+                });
+        }).catch((error) => {
+            console.log(error);
+            rej(error);
+        });;
+    });
+};
+
+module.exports.getOtherData = (postId) =>{
+    return new Promise((res, rej) => {
+        db.connect().then((obj) => {
+            obj.one(props.countLikes, [postId])
+                .then((data) => {
+                    obj.one(props.countDislikes, [postId])
+                        .then((newData) => {
+                            obj.one(props.countComments, [postId])
+                                .then((moreData) => {
+                                    res({
+                                        likes: data.likes,
+                                        dislikes: newData.dislikes,
+                                        comments: moreData.comment_quantity
+                                    })
+                                    obj.done();
+                                }).catch(err=>rej(err))
+                        }).catch(err=>rej(err))
+                })
+                .catch((error) => {
+                    rej({
+                        error: error,
+                        msg: 'Error',
+                        status: 500
+                    });
+                    obj.done();
+                });
+        }).catch((error) => {
+            console.log(error);
+            rej(error);
+        });;
+    });
+}
+
+
+/*
 module.exports.getUserPosts = (userId) => {
     return new Promise((res, rej) => {
         db.connect().then((obj) => {
@@ -72,7 +136,7 @@ module.exports.getUserPosts = (userId) => {
             rej(error);
         });
     });
-};
+};*/
 
 module.exports.newLike = (postId,userId,typeLike) => {
     return new Promise((res, rej) => {

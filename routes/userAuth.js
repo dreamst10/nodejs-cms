@@ -13,8 +13,6 @@ router.get('/register', (req,res)=>{
 
 router.post('/login',auth.isLogged,passport.authenticate('local'), function(req, res) {
    
-      
-      
           res.status(200).send({
               status: 200,
               message: 'Login Successful',
@@ -22,6 +20,7 @@ router.post('/login',auth.isLogged,passport.authenticate('local'), function(req,
           });
       
 });
+
 router.post('/register',auth.isLogged,auth.emailRegistered,auth.usernameRegistered,(req,res)=>{
     const user = req.body;
     const salt = bcrypt.genSaltSync(10);

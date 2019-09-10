@@ -19,9 +19,35 @@ router.post('/createPost',auth.isAuth, (req, res) => {
         })
 });
 
-router.get('getUserPosts',auth.isAuth,(req,res)=>{
+router.get('/getPosts', auth.isAuth, (req,res) =>{
+    Posts.getPosts(req.user.id)
+    .then((data)=>{
+        console.log(data);
+        a=data.data.map(value=>{
+            return Posts.getOtherData(value.post_id)
+            .then(moreData =>{
+                console.log(moreData)
+                if(req.user.id === value.user_id){
+                    isOwner= {isMine:true};
+                 }else{
+                     isOwner={isMine:false};
+                 }
+                return {...value,...moreData, ...isOwner};
+            }).catch(err=> console.log(err));
+        });
+        Promise.all(a).then((results) => {
+            let response = {
+                status:data.status,
+                message:data.message,
+                data:results
+            }
+            res.send(response);    
+        })
 
+    }
+    ).catch(err=>{res.send(err)})
 })
+
 
 router.delete('/deletePost',auth.isAuth, (req, res) => {
     console.log(req.body)

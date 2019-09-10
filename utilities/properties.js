@@ -15,7 +15,7 @@ module.exports={
 
 
 
-    getPosts:"SELECT * FROM posts WHERE user_id=$1 OR USER_id IN (SELECT user_id2 FROM follows WHERE user_id1=$1",
+    getPosts:"SELECT * FROM posts WHERE user_id=$1 OR USER_id IN (SELECT user_id1 FROM follows WHERE user_id2=$1)",
     getUserPosts:"SELECT * FROM posts WHERE user_id=$1",
     newPost:"INSERT INTO posts (post_title,post_text,post_url,user_id,type_post_id) VALUES ($1,$2,$3,$4,$5)",
     deletePost:"DELETE FROM posts WHERE post_id=$1 AND user_id=$2",
@@ -28,6 +28,7 @@ module.exports={
     newComment:"INSERT INTO comments (comment_text, comment_url, post_id, user_id) VALUES ($1,$2,$4,$3)",
     updateComment:"UPDATE comments SET comment_text=$1 WHERE comment_id=$2 AND user_id=$3",
     deleteComment:"DELETE FROM comments WHERE comment_id=$1 AND user_id=$2",
+    countComments:"SELECT COUNT(*) AS comment_quantity FROM comments WHERE post_id=$1",
 
     checkLike:"SELECT * FROM likes WHERE post_id=$1 AND user_id=$2",
     checkLikeType:"SELECT type_like_id FROM likes WHERE post_id=$1 AND user_id=$2",
@@ -35,10 +36,10 @@ module.exports={
     updateLike:"UPDATE likes SET type_like_id=$3 WHERE post_id=$1 AND user_id=$2",
     deleteLike:"DELETE FROM likes WHERE post_id=$1 and user_id=$2",
     countLikes:"SELECT COUNT(*) AS likes FROM likes WHERE post_id=$1 and type_like_id=1",
-    countDislike:"SELECT COUNT(*) AS dislikes FROM likes WHERE post_id=$1 and type_like_id=2",
+    countDislikes:"SELECT COUNT(*) AS dislikes FROM likes WHERE post_id=$1 and type_like_id=2",
 
 
-    checkFollow:"SELECT follow_id FROM follows WHERE user_id1=$1 AND user_id2=$2 OR user_id1=$2 AND user_id2=$1",
+    checkFollow:"SELECT user_id1, COUNT(*) AS follow_status FROM follows WHERE user_id1=$1 AND user_id2=$2 OR user_id1=$2 AND user_id2=$1 GROUP BY user_id1",
     follow:"INSERT INTO follows (user_id1, user_id2) VALUES ($1, $2)",
     unfollow:"DELETE FROM follows WHERE user_id1=$1 AND user_id2=$2",
     countFollowers:"SELECT COUNT(*) AS followers FROM follows WHERE user_id1=$1",

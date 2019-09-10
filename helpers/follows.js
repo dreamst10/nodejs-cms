@@ -11,7 +11,7 @@ module.exports.checkFollow=(followeeId,followerId)=>{
                     res(data);
                     obj.done();
                 }).catch(err=>{
-                    console.log(6);
+                    console.log(err);
                     rej({
                         error:err,
                         status:500,
